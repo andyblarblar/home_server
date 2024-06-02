@@ -1,0 +1,3 @@
+[submodule "transferware.ai"]
+	path = transferware.ai
+	url = https://github.com/andyblarblar/transferware.ai.git

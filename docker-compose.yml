@@ -1,0 +1,30 @@
+# Top level compose file
+include:
+  - transferwareai-compose.yml
+
+services:
+  # Reverse proxy
+  balancer:
+    image: traefik
+    environment:
+      - CLOUDFLARE_DNS_API_TOKEN_FILE=/run/secrets/cf_dns_token
+    ports:
+      # Our application (Forward normal and alt ports)
+      - "80:80"
+      - "591:591"
+      - "8443:8443"
+      - "443:443"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      - ./traefik.yml:/etc/traefik/traefik.yml
+      # Certs are stored here
+      - ./lets_encrypt/acme.json:/acme.json
+      - /var/run/docker.sock:/var/run/docker.sock
+    secrets:
+      - cf_dns_token
+
+secrets:
+  # Used for acme dns challenges to CF
+  cf_dns_token:
+    file: ./secrets/cf_dns_token.txt

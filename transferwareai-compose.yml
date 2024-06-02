@@ -1,0 +1,62 @@
+# Transferware.ai, served on twai.ealovega.dev
+services:
+  # Our replicated query apis
+  tw_query_api:
+    build:
+      dockerfile: query_api.dockerfile
+      context: ./transferware.ai
+    ports:
+      - "8080"
+    volumes:
+      - ./assets/transferware:/python_src/scratch
+    environment:
+      - "TRANSFERWARE_QUERY.TORCH_DEVICE=cpu" # No gpu on little guy
+    deploy:
+      replicas: 1
+    depends_on:
+      - balancer
+      - tw_broker
+    labels:
+      # Strip /api as the python server serves on root
+      - traefik.http.middlewares.strip-api.stripprefix.prefixes=/api
+      # Namespace query api on /api to allow static site on root
+      - traefik.http.routers.tw-query-api.rule=Host(`twai.ealovega.dev`) && PathPrefix(`/api`)
+      - traefik.http.routers.tw-query-api.middlewares=strip-api
+      # Terminate TLS for HTTPS
+      - traefik.http.routers.tw-query-api.tls.certResolver=lets_provider
+      - traefik.http.routers.tw-query-api.tls=true
+
+  # Serves the frontend
+  tw_static_site:
+    build:
+      dockerfile: static_site.dockerfile
+      context: ./transferware.ai
+      args:
+        - QUERY_URL=https://twai.ealovega.dev:8443 # TODO change later when ports change
+    ports:
+      - "8080"
+    deploy:
+      replicas: 1
+    depends_on:
+      - balancer
+    labels:
+      - traefik.http.routers.tw-static-site.rule=Host(`twai.ealovega.dev`) && PathPrefix(`/`) && !PathPrefix(`/api`)
+      # Terminate TLS for HTTPS
+      - traefik.http.routers.tw-static-site.tls.certResolver=lets_provider
+      - traefik.http.routers.tw-static-site.tls=true
+      # Use basic auth to protect just the frontend for tccs sake
+      - traefik.http.middlewares.tw-basic-auth.basicauth.users=umich:$$apr1$$qrOfGL5Q$$CVtxrLOfGwLeZzIFh44mI1
+      - traefik.http.routers.tw-static-site.middlewares=tw-basic-auth
+
+  # MQTT broker
+  tw_broker:
+    hostname: broker
+    image: eclipse-mosquitto
+    ports:
+      - "1883"
+    volumes:
+      - ./transferware.ai/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    depends_on:
+      - balancer
+    labels:
+      - "traefik.enable=false"
