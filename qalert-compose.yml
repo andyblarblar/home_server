@@ -14,4 +14,4 @@ services:
       - traefik.http.routers.qalert.tls.certResolver=lets_provider
       - traefik.http.routers.qalert.tls=true
     volumes:
-      - ./assets/qalert/private_key.pem:/app/private_key.pem
+      - ./assets/qalert/:/app/secrets
