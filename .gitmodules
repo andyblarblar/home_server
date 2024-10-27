@@ -1,3 +1,6 @@
 [submodule "transferware.ai"]
 	path = transferware.ai
 	url = https://github.com/andyblarblar/transferware.ai.git
+[submodule "ealovega_dev"]
+	path = ealovega_dev
+	url = https://github.com/andyblarblar/ealovega_dev.git

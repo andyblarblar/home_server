@@ -1,0 +1,15 @@
+# Personal website
+services:
+  ealovega_dev:
+    build:
+      dockerfile: Dockerfile
+      context: ./ealovega_dev
+    ports:
+      - "8080"
+    depends_on:
+      - balancer
+    labels:
+      - traefik.http.routers.ealovega-dev.rule=Host(`ealovega.dev`)
+      # Terminate TLS for HTTPS
+      - traefik.http.routers.ealovega-dev.tls.certResolver=lets_provider
+      - traefik.http.routers.ealovega-dev.tls=true

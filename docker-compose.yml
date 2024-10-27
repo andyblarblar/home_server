@@ -1,6 +1,7 @@
 # Top level compose file
 include:
   - transferwareai-compose.yml
+  - ealovega-dev-compose.yml
 
 services:
   # Reverse proxy
