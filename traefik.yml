@@ -14,7 +14,7 @@ entryPoints:
           scheme: https
 
   websecure:
-    address: ":8443" # TODO change to 443 when big server done
+    address: ":443"
 
 certificatesResolvers:
   lets_provider:

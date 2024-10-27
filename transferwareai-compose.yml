@@ -32,7 +32,7 @@ services:
       dockerfile: static_site.dockerfile
       context: ./transferware.ai
       args:
-        - QUERY_URL=https://twai.ealovega.dev:8443/api # TODO change later when ports change
+        - QUERY_URL=https://twai.ealovega.dev/api
     ports:
       - "8080"
     deploy:
