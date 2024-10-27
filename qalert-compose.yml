@@ -1,0 +1,17 @@
+# Queue Alert
+services:
+  qalert:
+    build:
+      dockerfile: Dockerfile
+      context: ./queue_alert
+    ports:
+      - "8080"
+    depends_on:
+      - balancer
+    labels:
+      - traefik.http.routers.qalert.rule=Host(`qalert.ealovega.dev`)
+      # Terminate TLS for HTTPS
+      - traefik.http.routers.qalert.tls.certResolver=lets_provider
+      - traefik.http.routers.qalert.tls=true
+    volumes:
+      - ./assets/qalert/private_key.pem:/app/private_key.pem

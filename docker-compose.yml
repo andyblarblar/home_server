@@ -2,6 +2,7 @@
 include:
   - transferwareai-compose.yml
   - ealovega-dev-compose.yml
+  - qalert-compose.yml
 
 services:
   # Reverse proxy

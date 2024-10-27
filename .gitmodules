@@ -4,3 +4,6 @@
 [submodule "ealovega_dev"]
 	path = ealovega_dev
 	url = https://github.com/andyblarblar/ealovega_dev.git
+[submodule "queue_alert"]
+	path = queue_alert
+	url = https://github.com/andyblarblar/queue_alert.git
