@@ -2,6 +2,8 @@
 providers:
   docker:
     { }
+  file:
+    directory: /etc/traefik/statics
 
 entryPoints:
   # Redirect http to https
