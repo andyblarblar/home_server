@@ -4,7 +4,8 @@ http:
   routers:
     mealie:
       entryPoints:
-      - websecure
+        - websecure
+        - web
       service: mealie
       rule: Host(`mealie.ealovega.dev`)
       tls:
@@ -15,6 +16,5 @@ http:
     mealie:
       loadBalancer:
         servers:
-        # NAS IP TODO parm somehow or use a hostname
-        - url: http://192.168.1.106:31001/
-        passHostHeader: false
+          # NAS IP TODO parm somehow or use a hostname
+          - url: http://192.168.1.106:31001/
