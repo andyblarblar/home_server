@@ -13,6 +13,7 @@ Exposes:
 - twai.ealovega.dev - Transferwareai senior design project
 - ealovega.dev - Primary personal website
 - qalert.ealovega.dev - Ride wait time webapp
+- mealie.ealovega.dev - Proxy to another local server that hosts a mealie instance
 
 ## Setup
 

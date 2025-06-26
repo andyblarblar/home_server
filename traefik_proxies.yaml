@@ -1,0 +1,20 @@
+# This file contains proxies to other services not governed by this compose
+
+http:
+  routers:
+    mealie:
+      entryPoints:
+        - websecure
+        - web
+      service: mealie
+      rule: Host(`mealie.ealovega.dev`)
+      tls:
+        certResolver: lets_provider
+
+  # Add the service
+  services:
+    mealie:
+      loadBalancer:
+        servers:
+          # NAS IP TODO parm somehow or use a hostname
+          - url: http://192.168.1.106:31001/

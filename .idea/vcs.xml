@@ -2,6 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ealovega_dev" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/queue_alert" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/transferware.ai" vcs="Git" />
   </component>
 </project>
