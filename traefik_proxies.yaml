@@ -10,6 +10,14 @@ http:
       rule: Host(`mealie.ealovega.dev`)
       tls:
         certResolver: lets_provider
+    jellyfin:
+      entryPoints:
+        - websecure
+        - web
+      service: jellyfin
+      rule: Host(`jf.ealovega.dev`)
+      tls:
+        certResolver: lets_provider
 
   # Add the service
   services:
@@ -18,3 +26,8 @@ http:
         servers:
           # NAS IP TODO parm somehow or use a hostname
           - url: http://192.168.10.106:30111/
+    jellyfin:
+      loadBalancer:
+        servers:
+          # NAS IP TODO parm somehow or use a hostname
+          - url: http://192.168.10.106:30013/
